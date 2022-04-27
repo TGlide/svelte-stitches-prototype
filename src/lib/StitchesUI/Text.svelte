@@ -87,7 +87,7 @@
     },
   });
 
-  type TextProps = BaseProps & WithVariantProps<typeof baseCss>;
+  export type TextProps = BaseProps & WithVariantProps<typeof baseCss>;
 </script>
 
 <script lang="ts">

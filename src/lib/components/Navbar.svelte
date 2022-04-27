@@ -1,6 +1,6 @@
 <script lang="ts">
+  import Link from "$lib/StitchesUI/Link.svelte";
   import Flex, { type FlexProps } from "$lib/UI/Flex.svelte";
-  import Link from "$lib/UI/Link.svelte";
 
   interface $$Props extends FlexProps {}
 </script>
