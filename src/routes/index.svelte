@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
-  import Box from "$lib/StitchesUI/Layout/Box.svelte";
-  import { lightTheme, palette } from "$lib/StitchesUI/stitches.config";
-  import Flex from "$lib/UI/Flex.svelte";
-  import Grid from "$lib/UI/Grid.svelte";
+  import Box from "$lib/UI/Layout/Box.svelte";
+  import Flex from "$lib/UI/Layout/Flex.svelte";
+  import Grid from "$lib/UI/Layout/Grid.svelte";
+  import { lightTheme, palette } from "$lib/UI/stitches.config";
   import Text from "$lib/UI/Text.svelte";
   import { objectKeys } from "$lib/utils/object";
 
@@ -14,30 +14,47 @@
 </svelte:head>
 
 <Box as="section">
-  <Flex gap={16} align="center">
-    <Text tag="h3" fontSize={32}>Palette</Text>
-  </Flex>
+  <Text as="h3" variants={{ size: "lg" }}>Palette</Text>
 
-  <Grid gap={32} templateColumns="repeat(10, 1fr)" mt={16}>
+  <Grid
+    css={{
+      gap: 32,
+      gridTemplateColumns: "repeat(10, 1fr)",
+      mt: 16,
+    }}
+  >
     {#each objectKeys(palette) as key}
-      <Flex mt={8} direction="column" gap={6}>
+      <Flex css={{ mt: 8, flexDirection: "column", gap: "$6" }}>
         <Box
-          css={{ backgroundColor: `$${key}`, size: "$64", borderRadius: "$lg" }}
+          css={{
+            backgroundColor: `$${key}`,
+            size: "$64",
+            borderRadius: "$lg",
+            border: "1px solid $fg",
+          }}
         />
         <span>{key}</span>
       </Flex>
     {/each}
   </Grid>
 
-  <Box css={{ mt: "$32" }}>
-    <Text tag="h3" fontSize={32}>Colors</Text>
-  </Box>
-
-  <Grid gap={32} templateColumns="repeat(10, 1fr)" mt={16}>
+  <Text as="h3" css={{ mt: "$32" }} variants={{ size: "lg" }}>Colors</Text>
+  <Grid
+    css={{
+      gap: 32,
+      gridTemplateColumns: "repeat(10, 1fr)",
+      mt: 16,
+    }}
+  >
     {#each objectKeys(lightTheme) as key}
-      <Flex mt={8} direction="column" gap={6}>
+      <Flex css={{ mt: 8, flexDirection: "column", gap: "$6" }}>
         <Box
-          css={{ backgroundColor: `$${key}`, size: "$64", borderRadius: "$lg" }}
+          css={{
+            backgroundColor: `$${key}`,
+            size: "$64",
+            borderRadius: "$lg",
+            border: "1px solid $fg",
+          }}
         />
         <span>{key}</span>
       </Flex>

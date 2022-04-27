@@ -13,11 +13,15 @@ export function generateClass<T = undefined>(
   css?: CSS,
   { baseCssFn, variants }: GenerateClassConfig<T> = {}
 ) {
-  if (!css) return undefined;
+  const resolvedCss = css ?? {};
 
   if (baseCssFn) {
-    return (baseCssFn as any)({ css, ...variants }); // TODO: Improve Typing
+    return (baseCssFn as any)({ css: resolvedCss, ...variants }); // TODO: Improve Typing
   }
 
-  return cssFn(css, variants ?? {})();
+  return cssFn(resolvedCss, variants ?? {})();
+}
+
+export function joinCss(...css: CSS[]): CSS {
+  return css.reduce((acc, c) => ({ ...acc, ...c }), {});
 }

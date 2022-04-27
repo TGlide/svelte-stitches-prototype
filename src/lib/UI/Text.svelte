@@ -1,126 +1,107 @@
 <script lang="ts" context="module">
-	import Box, { parseSpace, parseValue, type BoxProps } from './Box.svelte';
-	import { isFontFamily, theme, type FontFamily } from './theme';
+  import { cssFn } from "./stitches.config";
+  import type { BaseProps, WithVariantProps } from "./types";
+  import { generateClass } from "./utils";
 
-	export type TextProps = BoxProps & {
-		fontSize?: string | number;
-		fontFamily?: FontFamily;
-		fontWeight?:
-			| 100
-			| 200
-			| 300
-			| 400
-			| 500
-			| 600
-			| 700
-			| 800
-			| 900
-			| '100'
-			| '200'
-			| '300'
-			| '400'
-			| '500'
-			| '600'
-			| '700'
-			| '800'
-			| '900';
-		lineHeight?: string | number;
-		letterSpacing?: string | number;
-		textTransform?: 'uppercase' | 'lowercase' | 'capitalize';
-		textDecoration?: 'none' | 'underline' | 'line-through';
-	};
+  const baseCss = cssFn({
+    lineHeight: "$none",
 
-	export const parseFontFamily = (
-		value: FontFamily | string | undefined,
-		cssVar: string | string[]
-	): string | undefined => {
-		if (!value) return undefined;
+    variants: {
+      size: {
+        xxs: { fontSize: "$xxs" },
+        xs: { fontSize: "$xs" },
+        sm: { fontSize: "$sm" },
+        md: { fontSize: "$md" },
+        lg: { fontSize: "$lg" },
+        xl: { fontSize: "$xl" },
+        xxl: { fontSize: "$xxl" },
+        xxxl: { fontSize: "$xxxl" },
+      },
+      lineHeight: {
+        none: { lineHeight: "$none" },
+        tighter: { lineHeight: "$tighter" },
+        tight: { lineHeight: "$tight" },
+        normal: { lineHeight: "$normal" },
+        loose: { lineHeight: "$loose" },
+      },
+      fontWeight: {
+        normal: { fontWeight: "$normal" },
+        medium: { fontWeight: "$medium" },
+      },
+      letterSpacing: {
+        tighter: { letterSpacing: "$tighter" },
+        tight: { letterSpacing: "$tight" },
+        none: { letterSpacing: "$none" },
+        wide: { letterSpacing: "$wide" },
+        wider: { letterSpacing: "$wider" },
+      },
+      variant: {
+        caps: {
+          fontSize: "$xxs",
+          textTransform: "uppercase",
+          fontWeight: "$medium",
+          lineHeight: "$none",
+          letterSpacing: "$wider",
+        },
+        small: {
+          fontSize: "$xs",
+          fontWeight: "$normal",
+          lineHeight: "$loose",
+        },
+        normal: {
+          fontSize: "$sm",
+          fontWeight: "$normal",
+          lineHeight: "$loose",
+        },
+        regular: {
+          fontSize: "$rg",
+          fontWeight: "$normal",
+          lineHeight: "$normal",
+        },
+        body: {
+          fontSize: "$md",
+          fontWeight: "$normal",
+          lineHeight: "$loose",
+        },
+        big: {
+          fontSize: "$lg",
+          fontWeight: "$normal",
+          lineHeight: "$normal",
+        },
+        title: {
+          fontSize: "$xl",
+          fontWeight: "$medium",
+          lineHeight: "$tight",
+        },
+        display: {
+          fontSize: "$xxl",
+          fontWeight: "$medium",
+          lineHeight: "$tighter",
+        },
+        huge: {
+          fontSize: "$xxxl",
+          fontWeight: "$medium",
+          lineHeight: "$none",
+        },
+      },
+    },
+  });
 
-		let parsedValue = value;
-		if (isFontFamily(value)) {
-			parsedValue = theme.fontFamilies[value];
-		}
-
-		if (typeof cssVar === 'string') {
-			return `--${cssVar}: ${parsedValue}`;
-		}
-
-		return cssVar.map((v) => `--${v}: ${parsedValue}`).join(';');
-	};
+  export type TextProps = BaseProps & WithVariantProps<typeof baseCss>;
 </script>
 
 <script lang="ts">
-	interface $$Props extends TextProps {}
+  interface $$Props extends TextProps {}
 
-	// Due to some svelte:element bugs causing jumping around on 1st render, we set the tag as div instead of p.
-	export let tag: $$Props['tag'] = 'div';
-
-	const getStyle = (props: TextProps) => {
-		return [
-			// Style prop
-			props.style ?? undefined,
-			// Text props
-			parseValue(props.textTransform, 'text-transform'),
-			parseValue(props.fontWeight, 'font-weight'),
-			parseValue(props.textDecoration, 'text-decoration'),
-			parseSpace(props.fontSize, 'font-size'),
-			parseSpace(props.lineHeight, 'line-height'),
-			parseSpace(props.letterSpacing, 'letter-spacing'),
-			parseFontFamily(props.fontFamily, 'font-family')
-		]
-			.filter(Boolean)
-			.join(';');
-	};
-
-	$: style = getStyle($$props);
+  export let as: TextProps["as"] = "div";
+  export let css: TextProps["css"] = undefined;
+  export let variants: TextProps["variants"] = undefined;
 </script>
 
-<div
-	class="wrapper"
-	class:font-size={$$props.fontSize}
-	class:font-weight={$$props.fontWeight}
-	class:line-height={$$props.lineHeight}
-	class:letter-spacing={$$props.letterSpacing}
-	class:text-transform={$$props.textTransform}
-	class:font-family={$$props.fontFamily}
-	class:text-decoration={$$props.textDecoration}
-	{style}
+<svelte:element
+  this={as}
+  class={generateClass(css, { baseCssFn: baseCss, variants })}
+  {...$$restProps}
 >
-	<Box {tag} {...$$restProps}>
-		<slot />
-	</Box>
-</div>
-
-<style>
-	.wrapper {
-		display: contents;
-	}
-
-	.wrapper.font-size > :global(*) {
-		font-size: var(--font-size);
-	}
-
-	.wrapper.font-weight > :global(*) {
-		font-weight: var(--font-weight);
-	}
-
-	.wrapper.line-height > :global(*) {
-		line-height: var(--line-height);
-	}
-
-	.wrapper.letter-spacing > :global(*) {
-		letter-spacing: var(--letter-spacing);
-	}
-
-	.wrapper.text-transform > :global(*) {
-		text-transform: var(--text-transform);
-	}
-
-	.wrapper.font-family > :global(*) {
-		font-family: var(--font-family);
-	}
-
-	.wrapper.text-decoration > :global(*) {
-		text-decoration: var(--text-decoration);
-	}
-</style>
+  <slot />
+</svelte:element>

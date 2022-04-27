@@ -42,7 +42,7 @@
     right: 1rem;
     top: 1rem;
 
-    background-color: var(--palette-blue-60);
+    background-color: var(--colors-blue60);
     border-radius: 0.25rem;
     cursor: pointer;
     font-size: 0.9rem;
@@ -52,6 +52,6 @@
   }
 
   button:hover {
-    background-color: var(--palette-blue-70);
+    background-color: var(--colors-blue70);
   }
 </style>

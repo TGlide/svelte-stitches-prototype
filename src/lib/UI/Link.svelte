@@ -7,28 +7,24 @@
 </script>
 
 <script lang="ts">
+  import type { CSS } from "./stitches.config";
   import type { TextProps } from "./Text.svelte";
   import Text from "./Text.svelte";
+  import { joinCss } from "./utils";
 
   interface $$Props extends LinkProps {}
+
+  export let css: $$Props["css"] = undefined;
+
+  const baseCss = {
+    transition: "opacity 0.25s ease",
+    "&:hover": {
+      opacity: 0.75,
+    },
+  } as CSS;
+  $: resolvedCss = joinCss(baseCss, css ?? {});
 </script>
 
-<div class="wrapper">
-  <Text tag="a" {...$$restProps}>
-    <slot />
-  </Text>
-</div>
-
-<style>
-  .wrapper {
-    display: contents;
-  }
-
-  .wrapper :global(a) {
-    transition: opacity 0.25s ease;
-  }
-
-  .wrapper :global(a:hover) {
-    opacity: 0.75;
-  }
-</style>
+<Text as="a" css={resolvedCss} {...$$restProps}>
+  <slot />
+</Text>

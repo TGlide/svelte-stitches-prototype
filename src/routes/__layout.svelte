@@ -1,8 +1,8 @@
 <script lang="ts">
   import Navbar from "$lib/components/Navbar.svelte";
   import ThemeSwitch from "$lib/components/ThemeSwitch.svelte";
-  import Box from "$lib/StitchesUI/Layout/Box.svelte";
-  import { dark } from "$lib/StitchesUI/stitches.config";
+  import Box from "$lib/UI/Layout/Box.svelte";
+  import { dark } from "$lib/UI/stitches.config";
   import "@fontsource/inter";
   import "../app.css";
 </script>
@@ -22,7 +22,7 @@
     fontFamily: "$sans",
   }}
 >
-  <Navbar mb={16} />
+  <Navbar css={{ mb: "$16" }} />
   <ThemeSwitch />
   <slot />
 </Box>

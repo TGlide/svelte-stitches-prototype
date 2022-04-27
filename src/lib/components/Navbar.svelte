@@ -1,11 +1,21 @@
 <script lang="ts">
-  import Link from "$lib/StitchesUI/Link.svelte";
-  import Flex, { type FlexProps } from "$lib/UI/Flex.svelte";
+  import Flex from "$lib/UI/Layout/Flex.svelte";
+  import Link from "$lib/UI/Link.svelte";
+  import type { CSS } from "$lib/UI/stitches.config";
+  import type { BaseProps } from "$lib/UI/types";
+  import { joinCss } from "$lib/UI/utils";
 
-  interface $$Props extends FlexProps {}
+  interface $$Props extends BaseProps {}
+
+  export let css: $$Props["css"] = undefined;
+
+  const baseCss: CSS = {
+    gap: "$16",
+  };
+
+  $: resolvedCss = joinCss(baseCss, css ?? {});
 </script>
 
-<Flex tag="nav" gap={16} {...$$restProps}>
+<Flex as="nav" css={resolvedCss} {...$$restProps}>
   <Link href="/">📚 UI Library</Link>
-  <Link href="/color-gen">🎨 Generate colors</Link>
 </Flex>
