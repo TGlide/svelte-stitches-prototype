@@ -1,19 +1,10 @@
 <script lang="ts">
   import Navbar from "$lib/components/Navbar.svelte";
   import ThemeSwitch from "$lib/components/ThemeSwitch.svelte";
+  import Box from "$lib/StitchesUI/Layout/Box.svelte";
   import { dark } from "$lib/StitchesUI/stitches.config";
   import "@fontsource/inter";
-  import { css, globalCss } from "@stitches/core";
   import "../app.css";
-
-  const globalStyles = globalCss({
-    body: {
-      color: "$fg",
-      backgroundColor: "$bg",
-    },
-  });
-
-  globalStyles();
 </script>
 
 <!-- 
@@ -22,15 +13,16 @@
 -->
 <div class={dark} />
 
-<main>
+<Box
+  css={{
+    color: "$fg",
+    backgroundColor: "$bg",
+    minHeight: "100vh",
+    p: "$16",
+    fontFamily: "$sans",
+  }}
+>
   <Navbar mb={16} />
   <ThemeSwitch />
-  <div
-    class={css({
-      color: "red",
-    })()}
-  >
-    hey
-  </div>
   <slot />
-</main>
+</Box>
