@@ -3,6 +3,7 @@
   import ThemeSwitch from "$lib/components/ThemeSwitch.svelte";
   import Box from "$lib/StitchesUI/Layout/Box.svelte";
   import { dark } from "$lib/StitchesUI/stitches.config";
+  import Text from "$lib/StitchesUI/Text.svelte";
   import "@fontsource/inter";
   import "../app.css";
 </script>
@@ -22,6 +23,12 @@
     fontFamily: "$sans",
   }}
 >
+  <Text
+    css={{ color: "$blue80", mb: "$16" }}
+    variants={{ size: "xxl", letterSpacing: "none" }}
+  >
+    Hey!
+  </Text>
   <Navbar mb={16} />
   <ThemeSwitch />
   <slot />

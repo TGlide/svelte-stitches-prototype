@@ -1,26 +1,13 @@
-<script lang="ts" context="module">
-  import type { CSS } from "../stitches.config";
-  import { css as stitchesCSS } from "../stitches.config";
-
-  export type BoxProps = {
-    as?: string;
-    css?: CSS;
-    cssArgs?: Record<string, unknown>;
-  };
-</script>
-
 <script lang="ts">
-  interface $$Props extends BoxProps {}
+  import type { BaseProps } from "../types";
+  import { generateClass } from "../utils";
 
-  export let as: $$Props["as"] = "div";
-  export let css: $$Props["css"] = undefined;
-  export let cssArgs: $$Props["cssArgs"] = {};
+  interface $$Props extends BaseProps {}
+
+  export let as: BaseProps["as"] = "div";
+  export let css: BaseProps["css"] = undefined;
 </script>
 
-<svelte:element
-  this={as}
-  class={css && stitchesCSS(css)({ ...cssArgs })}
-  {...$$restProps}
->
+<svelte:element this={as} class={generateClass(css)} {...$$restProps}>
   <slot />
 </svelte:element>

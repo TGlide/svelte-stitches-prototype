@@ -201,6 +201,8 @@ const stitchesConfig = createStitches({
 
 export const { css, createTheme, getCssText, globalCss, config } =
   stitchesConfig;
+export const cssFn = css;
+
 export type CSS = StitchesCSS<typeof config>;
 
 export const dark = createTheme("dark-theme", {

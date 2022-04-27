@@ -1,16 +1,21 @@
 <script lang="ts">
-  import type { CSS } from "../stitches.config";
-  import type { BoxProps } from "./Box.svelte";
-  import Box from "./Box.svelte";
+  import { cssFn } from "../stitches.config";
+  import type { BaseProps } from "../types";
+  import { generateClass } from "../utils";
 
-  interface $$Props extends BoxProps {}
+  interface $$Props extends BaseProps {}
 
-  const baseCss: CSS = { display: "flex" };
-  export let css: $$Props["css"] = undefined;
-
-  $: resolvedCss = { ...baseCss, ...css };
+  const baseCss = cssFn({
+    display: "flex",
+  });
+  export let as: BaseProps["as"] = "div";
+  export let css: BaseProps["css"] = undefined;
 </script>
 
-<Box css={resolvedCss} {...$$restProps}>
+<svelte:element
+  this={as}
+  class={generateClass(css, { baseCssFn: baseCss })}
+  {...$$restProps}
+>
   <slot />
-</Box>
+</svelte:element>
