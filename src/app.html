@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Svelte CSS UI Prototype" />
+    <link rel="icon" href="%svelte.assets%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    %svelte.head%
+    <!-- STITCHES_CSS_ENTRY_POINT -->
+  </head>
+  <body>
+    <script>
+      const CLASS_DARK = "dark-theme";
+      const CLASS_LIGHT = "light-theme";
+
+      function setClassOnDocumentBody(darkMode) {
+        document.body.classList.add(darkMode ? CLASS_DARK : CLASS_LIGHT);
+        document.body.classList.remove(darkMode ? CLASS_LIGHT : CLASS_DARK);
+      }
+
+      const currentTheme = localStorage.getItem("theme")
+        ? localStorage.getItem("theme")
+        : null;
+
+      setClassOnDocumentBody(currentTheme === "dark");
+    </script>
+
+    <div>%svelte.body%</div>
+  </body>
+</html>
