@@ -1,7 +1,8 @@
 <script lang="ts" context="module">
-  import { cssFn } from "./stitches.config";
-  import type { BaseProps, WithVariantProps } from "./types";
-  import { generateClass } from "./utils";
+  import type { VariantProps } from "@stitches/core"
+  import { cssFn } from "./stitches.config"
+  import type { BaseProps } from "./types"
+  import { generateClass } from "./utils"
 
   const baseCss = cssFn({
     lineHeight: "$none",
@@ -85,22 +86,25 @@
         },
       },
     },
-  });
+  })
 
-  export type TextProps = BaseProps & WithVariantProps<typeof baseCss>;
+  export type TextProps = BaseProps & VariantProps<typeof baseCss>
 </script>
 
 <script lang="ts">
   interface $$Props extends TextProps {}
 
-  export let as: TextProps["as"] = "div";
-  export let css: TextProps["css"] = undefined;
-  export let variants: TextProps["variants"] = undefined;
+  export let as: TextProps["as"] = "div"
+  export let css: TextProps["css"] = undefined
+  console.log($$restProps)
 </script>
 
 <svelte:element
   this={as}
-  class={generateClass(css, { baseCssFn: baseCss, variants })}
+  class={generateClass(css, {
+    baseCssFn: baseCss,
+    variants: { ...$$restProps },
+  })}
   {...$$restProps}
 >
   <slot />

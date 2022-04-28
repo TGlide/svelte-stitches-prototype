@@ -1,12 +1,12 @@
 <script context="module" lang="ts">
-  import Box from "$lib/UI/Layout/Box.svelte";
-  import Flex from "$lib/UI/Layout/Flex.svelte";
-  import Grid from "$lib/UI/Layout/Grid.svelte";
-  import { lightTheme, palette } from "$lib/UI/stitches.config";
-  import Text from "$lib/UI/Text.svelte";
-  import { objectKeys } from "$lib/utils/object";
+  import Box from "$lib/UI/Layout/Box.svelte"
+  import Flex from "$lib/UI/Layout/Flex.svelte"
+  import Grid from "$lib/UI/Layout/Grid.svelte"
+  import { lightTheme, palette } from "$lib/UI/stitches.config"
+  import Text from "$lib/UI/Text.svelte"
+  import { objectKeys } from "$lib/utils/object"
 
-  export const prerender = true;
+  export const prerender = true
 </script>
 
 <svelte:head>
@@ -14,7 +14,7 @@
 </svelte:head>
 
 <Box as="section">
-  <Text as="h3" variants={{ size: "lg" }}>Palette</Text>
+  <Text as="h3" size="lg">Palette</Text>
 
   <Grid
     css={{
@@ -38,7 +38,7 @@
     {/each}
   </Grid>
 
-  <Text as="h3" css={{ mt: "$32" }} variants={{ size: "lg" }}>Colors</Text>
+  <Text as="h3" css={{ mt: "$32" }} size="lg">Colors</Text>
   <Grid
     css={{
       gap: 32,
