@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
-  import type { VariantProps } from "@stitches/core"
-  import { cssFn } from "./stitches.config"
-  import type { BaseProps } from "./types"
-  import { extractVariants, generateClass } from "./utils"
+  import type { VariantProps } from "@stitches/core";
+  import { cssFn } from "./stitches.config";
+  import type { BaseProps } from "./types";
+  import { extractVariants, generateClass } from "./utils";
 
   const baseCssObj = {
     lineHeight: "$none",
@@ -86,26 +86,26 @@
         },
       },
     },
-  }
+  };
 
-  const baseCss = cssFn(baseCssObj)
+  const baseCss = cssFn(baseCssObj);
 
-  export type TextProps = BaseProps & VariantProps<typeof baseCss>
+  export type TextProps = BaseProps & VariantProps<typeof baseCss>;
 </script>
 
 <script lang="ts">
   interface $$Props extends TextProps {}
 
-  export let as: TextProps["as"] = "div"
-  export let css: TextProps["css"] = undefined
-  const { variants, cleanedProps } = extractVariants(baseCssObj, $$restProps)
+  export let as: TextProps["as"] = "div";
+  export let css: TextProps["css"] = undefined;
+  const { variants, cleanedProps } = extractVariants(baseCssObj, $$restProps);
 </script>
 
 <svelte:element
   this={as}
   class={generateClass(css, {
     baseCssFn: baseCss,
-    variants: { ...$$restProps },
+    variants,
   })}
   {...cleanedProps}
 >
