@@ -2,9 +2,9 @@
   import type { VariantProps } from "@stitches/core"
   import { cssFn } from "./stitches.config"
   import type { BaseProps } from "./types"
-  import { generateClass } from "./utils"
+  import { extractVariants, generateClass } from "./utils"
 
-  const baseCss = cssFn({
+  const baseCssObj = {
     lineHeight: "$none",
 
     variants: {
@@ -86,7 +86,9 @@
         },
       },
     },
-  })
+  }
+
+  const baseCss = cssFn(baseCssObj)
 
   export type TextProps = BaseProps & VariantProps<typeof baseCss>
 </script>
@@ -96,7 +98,7 @@
 
   export let as: TextProps["as"] = "div"
   export let css: TextProps["css"] = undefined
-  console.log($$restProps)
+  const { variants, cleanedProps } = extractVariants(baseCssObj, $$restProps)
 </script>
 
 <svelte:element
@@ -105,7 +107,7 @@
     baseCssFn: baseCss,
     variants: { ...$$restProps },
   })}
-  {...$$restProps}
+  {...cleanedProps}
 >
   <slot />
 </svelte:element>
